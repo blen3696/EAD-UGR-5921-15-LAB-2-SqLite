@@ -5,14 +5,11 @@ using PizzaStoreSQLite.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Connection string to SQLite
 var connectionString = "Data Source=Pizzas.db";
 
-// Register DbContext using SQLite
 builder.Services.AddDbContext<PizzaDb>(options =>
     options.UseSqlite(connectionString));
 
-// Add Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -26,14 +23,13 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Enable Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// CRUD Endpoints
+
 
 app.MapGet("/pizzas", async (PizzaDb db) =>
     await db.Pizzas.ToListAsync());
